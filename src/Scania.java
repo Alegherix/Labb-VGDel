@@ -2,15 +2,6 @@ import java.awt.*;
 
 public class Scania extends Transporter{
 
-    // Frågor till Niklas
-    // Är det rimligt att ha en Vehicle class som man Delegerar till via Composition?
-    // Annars hur ska man använda ett builder pattern när man har en Abstract Class?
-    // Om vi vill använda gas, så vill vi få ett felmeddelande
-    // Problem -> Man kan kringå gas med denna lösningen, om man callar på truck.gas() istället för scania objektets gas, om man inte använder abstract
-    // Dock är den privat så man kan inte nå truck i detta fallet.
-    // När jag Unloader så kan jag antigen returnera Vehicle via pop, och då blir andra fllet att jag returnerar null, alt en void funktion
-    // T.ex. Om jag vill loada en cargo, borde vi casta exceptions för angivet fel. te.x IsFull, OutOfRange, InvalidType etcetc..
-
     private Vehicle.Type type;
     private Direction direction;
     private Engine engine;
@@ -76,5 +67,10 @@ public class Scania extends Transporter{
     @Override
     public void load() {
 
+    }
+
+    @Override
+    public Direction getDirection() {
+        return null;
     }
 }

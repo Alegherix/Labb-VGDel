@@ -14,10 +14,10 @@ public abstract class Vehicle implements Movable {
     }
 
 
-
     public Vehicle(){
         this(new Body(Color.black,4), new Engine(100), new Position(), Direction.SOUTH, "", Type.CAR);
     }
+
 
     public Vehicle(Body body, Engine engine, Position position, Direction direction, String modelName, Type type) {
         this.body = body;

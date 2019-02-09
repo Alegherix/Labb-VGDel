@@ -1,9 +1,8 @@
 import java.awt.*;
 
-public class Volvo240 extends Vehicle {
+public class Volvo240 extends Vehicle implements ITransportable{
 
     public static final double trimFactor = 1.25;
-
 
     public Volvo240(){
         this(Color.black);

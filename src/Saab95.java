@@ -1,26 +1,23 @@
 import java.awt.*;
 
-public class Saab95 implements ITransportable{
+public class Saab95 extends Vehicle implements ITransportable{
 
     private boolean turboOn;
-    private Vehicle.Type type;
-    private Direction direction;
-    private Engine engine;
-    private Body body;
-    private String modelname;
-    private Position position;
+    //private final Vehicle saab95;
 
     public Saab95(){
         this(Color.black);
     }
 
     public Saab95(Color color){
-        body = new Body(color, 2);
-        engine = new Engine(125);
-        type = Vehicle.Type.CAR;
-        direction = Direction.SOUTH;
-        modelname = "Saab95";
-        position = ITransportable.position;
+        super(new Body(color, 2),
+                new Engine(125),
+                new Position(),
+                Direction.SOUTH,
+                "Saab95",
+                Type.CAR);
+        turboOn = false;
+        getEngine().stopEngine();
     }
 
     /**
@@ -46,6 +43,8 @@ public class Saab95 implements ITransportable{
         double turbo = 1;
         if(turboOn) turbo = 1.3;
         //return saab95.getEngine().enginePower * 0.01 * turbo;
-        return engine.enginePower * 0.01 * turbo;
+        return getEngine().enginePower * 0.01 * turbo;
     }
+
+
 }
