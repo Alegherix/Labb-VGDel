@@ -21,7 +21,7 @@ public class StandardBodyShop {
         bodyShop.addVehicleToShop(vehicle);
     }
 
-    Vehicle removeFromBodyShop() {
+    public Vehicle removeFromBodyShop() {
         return bodyShop.removeFromBodyShop();
     }
 

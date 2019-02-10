@@ -1,14 +1,14 @@
 import java.awt.*;
 
-public class Scania extends Transporter{
-
+public class Scania extends Vehicle{
     private Vehicle.Type type;
     private Direction direction;
     private Engine engine;
     private Body body;
     private String modelname;
     private Position position;
-    private RegularCargo cargo;
+    private Cargo cargo;
+
 
 
     public Scania() {
@@ -23,54 +23,39 @@ public class Scania extends Transporter{
         direction = Direction.SOUTH;
         modelname = "Scania";
         position = ITransportable.position;
+        cargo = new Cargo();
     }
 
 
-    public RegularCargo getCargo() {
-        return cargo;
+
+    public double getCargoAngle(){
+        return cargo.getAngle().getAmount();
     }
 
-
-    public void raiseCargo(double amount){
-        if(!isMoving()){
-            cargo.raise(amount);
-        }
-        else{
-            throw new IllegalStateException("You need to stop moving before raising the cargo");
-        }
-    }
 
     public void lowerCargo(double amount){
         if(!isMoving()){
-            cargo.lower(amount);
+            cargo.manuallyLower(amount);
         }
         else{
-            throw new IllegalStateException("You need to stop moving before lowering the cargo");
+            throw new IllegalStateException("You need to stop moving before trying to manage the cargo");
+        }
+    }
+
+    public void manuallyRaise(double amount){
+        if(!isMoving()){
+            cargo.manuallyRaise(amount);
+        }
+        else{
+            throw new IllegalStateException("You need to stop moving before trying to manage the cargo");
         }
     }
 
     @Override
-    public boolean canBeLoaded() {
-        return false;
-    }
-
-    @Override
-    public boolean unLoadable() {
-        return false;
-    }
-
-    @Override
-    public void unLoad() {
-
-    }
-
-    @Override
-    public void load() {
-
-    }
-
-    @Override
-    public Direction getDirection() {
-        return null;
+    public void move() {
+        if(!cargo.getAngle().getState().equals(Angle.STATE.DOWN)){
+            throw new IllegalStateException("You need to raise the cargo before trying to drive away");
+        }
+        super.move();
     }
 }

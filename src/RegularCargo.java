@@ -3,9 +3,11 @@ public class RegularCargo implements ICargo{
     private double currentAngle;
     public static final int LOWER_LIMIT = 0;
     public static final int UPPER_LIMIT = 70;
+    Angle angle;
 
     public RegularCargo() {
         currentAngle = LOWER_LIMIT;
+        angle = new Angle();
     }
 
 
@@ -36,10 +38,13 @@ public class RegularCargo implements ICargo{
 
     @Override
     public void raise() {
-        currentAngle = 70;
+        currentAngle = Angle.STATE.UP.getDegree();
     }
+
+
 
     public double getCurrentAngle() {
         return currentAngle;
     }
+
 }

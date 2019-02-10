@@ -1,22 +1,23 @@
 import java.util.Deque;
 
-public interface ITransporter {
+public interface ITransporter<T> {
 
-    boolean canBeLoaded();
+    void load(T t);
 
-    // Möjligt att det räcker med att bara kunna invertera canBeLoaded
-    boolean unLoadable();
+    /**
+     * Kommer vara unik för både Semi och för Ferry, PollFirsrt, PollLAst
+     * @return
+     */
+    T unload();
 
-    void unLoad();
+    boolean isFull();
 
-    void load();
+    Deque<T> getTransported();
 
-    boolean isMoving();
+    Position getPosition();
 
-    Position getTransporterPosition();
 
-    Deque<ITransportable> getTransportables();
+    boolean withinValidLoadingrange(T t);
 
-    Direction getDirection();
 
 }

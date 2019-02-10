@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class SemiTruck extends Vehicle {
+public class SemiTruck extends Vehicle{
 
 
     private CarCargo cargo;
@@ -25,6 +25,10 @@ public class SemiTruck extends Vehicle {
     private boolean canLoadCargo(Vehicle vehicle){
         return withinValidLoadingRange(vehicle) &&
                 cargo.loadable(vehicle);
+    }
+
+    public CarCargo getCargo() {
+        return cargo;
     }
 
     // Kan behöva fixas
@@ -59,15 +63,6 @@ public class SemiTruck extends Vehicle {
         }
     }
 
-
-    public void lowerCargo(){
-        if(!isMoving()){
-            cargo.lower();
-        }
-        else{
-            throw new IllegalStateException("You need to stop moving before trying to lower the cargo");
-        }
-    }
 
     public void raiseCargo(){
         cargo.raise();

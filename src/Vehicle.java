@@ -61,7 +61,7 @@ public abstract class Vehicle implements Movable {
     }
 
     protected void incrementSpeed(double amount){
-        engine.setCurrentSpeed(Math.min(engine.getCurrentSpeed() + speedFactor() * amount, engine. enginePower));
+        engine.setCurrentSpeed(Math.min(engine.getCurrentSpeed() + speedFactor() * amount, engine. getEnginePower()));
     }
 
     /**
@@ -107,7 +107,7 @@ public abstract class Vehicle implements Movable {
         }
     }
 
-    protected boolean isMoving(){
+    public boolean isMoving(){
         return getEngine().getCurrentSpeed()>0;
     }
 
