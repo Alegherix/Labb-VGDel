@@ -1,10 +1,5 @@
 import org.junit.Test;
 
-import java.awt.*;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
-
 import static org.junit.Assert.*;
 
 public class CarTest {
@@ -143,11 +138,7 @@ public class CarTest {
         System.out.println(saab95.getEngine().getCurrentSpeed());
     }
 
-    @Test
-    public void loadTruckOntoTruck(){
-        SemiTruck semiTruck = new SemiTruck();
-        semiTruck.loadCargo(semiTruck);
-    }
+
 /*
     @Test
     public void drivingWithCargoDown(){
@@ -188,10 +179,10 @@ public class CarTest {
 
     @Test
     public void drivingWithCargoDown(){
-        SemiTruck semiTruck = new SemiTruck();
+        Semitruck semiTruck = new Semitruck();
         semiTruck.getEngine().startEngine();
         semiTruck.move();
-        semiTruck.getCargo().lowerCargo(semiTruck);
+        semiTruck.lowerCargo();
     }
 
     @Test
@@ -261,7 +252,8 @@ public class CarTest {
 
     @Test
     public void addingToCargoOverThecap(){
-        SemiTruckWithExtension semiTruck = new SemiTruckWithExtension(20);
+        Semitruck semiTruck = new Semitruck(20);
+        semiTruck.lowerCargo();
         semiTruck.getEngine().stopEngine();
         for (int i = 0; i <= 21; i++) {
             semiTruck.load(new Saab95());
@@ -271,12 +263,26 @@ public class CarTest {
 
     @Test
     public void loadingTransporterWhileMoving(){
-        SemiTruckWithExtension semiTruckWithExtension = new SemiTruckWithExtension(20);
+        Semitruck semiTruckWithExtension = new Semitruck(20);
         semiTruckWithExtension.getEngine().startEngine();
+        semiTruckWithExtension.lowerCargo();
         semiTruckWithExtension.load(new Volvo240());
-
     }
 
+    @Test
+    public void tryingToLoadItself(){
+        Semitruck semi = new Semitruck(20);
+        semi.lowerCargo();
+        semi.load(new Saab95());
+        semi.load(semi);
+    }
+
+    @Test
+    public void lowerCargoWhileDriving(){
+        Semitruck semi = new Semitruck(10);
+        semi.getEngine().startEngine();
+        semi.lowerCargo();
+    }
 
 
 }

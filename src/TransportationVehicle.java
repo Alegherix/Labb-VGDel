@@ -2,7 +2,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.function.Predicate;
 
-public abstract class TransportationVehicle extends Vehicle implements ITransporter<ITransportable>{
+public abstract class TransportationVehicle extends Vehicle implements ITransporter<ITransportable>, ITransportable{
 
     private int cargoLimit;
     private Deque<ITransportable> transportationList;
@@ -27,8 +27,19 @@ public abstract class TransportationVehicle extends Vehicle implements ITranspor
     }
 
   public boolean canUnloadCargo(){
-        return !isMoving() && cargo.isDown();
+        return cargoIsLowered() && tryingToManageCargoSafely();
   }
+
+    @Override
+    public ITransportable unload(ITransportable iTransportable, Position position) {
+        if(canUnloadCargo()){
+            iTransportable.setPosition(position);
+            return iTransportable;
+        }
+        else{
+            return null;
+        }
+    }
 
     /**
      *
@@ -36,72 +47,42 @@ public abstract class TransportationVehicle extends Vehicle implements ITranspor
      */
     @Override
     public void load(ITransportable iTransportable) {
-        if(canAddToCargo() && !managingCargoWhileMoving()){
+        if(withinLoadingCapacity() && cargoIsLowered() && tryingToManageCargoSafely()
+        && withinValidLoadingrange(iTransportable) && !tryingToLoadItself(iTransportable)){
             transportationList.add(iTransportable);
         }
-
-        /*
-        if(iTransportable.equals(this)){
-            throw new IllegalArgumentException("You can't load this " + iTransportable.getClass().getName() + " onto itself");
-        }
-        else if(!cargo.isDown()){
-            throw new IllegalStateException("Cargo needs to be down to be loaded");
-        }
-        else if(!withinValidLoadingrange(iTransportable)){
-            throw new IllegalStateException("The " + iTransportable.getClass().getName() + "needs to be within proper loading range");
-        }
-        else if(isMoving()){
-            throw new IllegalStateException("You need to stop moving before trying to load");
-        }
-        else if(isFull()){
-            throw new IllegalArgumentException("The cargo is already fully loaded");
-        }
-        else{
-            transportationList.add(iTransportable);
-        }
-        */
     }
 
-    public boolean canAddToCargo(){
+    private boolean withinLoadingCapacity(){
         if(transportationList.size() < cargoLimit){
             return true;
         }
         else{
-            throw new IllegalStateException("The cargo is already at max capacity");
+            throw new IllegalStateException("The cargo is already fully stacked");
         }
     }
 
-
-    private boolean managingCargoWithoutBeingDown(){
-        if(cargo.isDown()){
-           return true;
+    private boolean cargoIsLowered(){
+        if(!cargo.isDown()){
+            throw new IllegalStateException("You need to lower the cargo before trying to load");
         }
         else{
-            throw new IllegalStateException("The cargo needs to be Down before trying to work with it");
+            return true;
         }
     }
 
-    private boolean managingCargoWhileDriving(){
-        if(isMoving()){
+    private boolean tryingToManageCargoSafely(){
+        if(!isMoving()){
             return true;
         }
         else{
-            throw new IllegalStateException("You cannot manage the cargo while driving");
-        }
-    }
-
-    private boolean managingCargoWhileMoving(){
-        if(isMoving()){
-            return true;
-        }
-        else{
-            throw new IllegalStateException("You need to stop before trying to manage the cargo");
+            throw new IllegalStateException("Plesae stop moving before attempting to manage the Cargo");
         }
     }
 
     private boolean tryingToLoadItself(ITransportable iTransportable){
         if(!this.equals(iTransportable)){
-            return true;
+            return false;
         }
         else{
             throw new IllegalArgumentException("You can't load this " + iTransportable.getClass().getName() + " onto itself");
@@ -120,11 +101,6 @@ public abstract class TransportationVehicle extends Vehicle implements ITranspor
     }
 
     @Override
-    public boolean isFull() {
-        return transportationList.size() >= cargoLimit;
-    }
-
-    @Override
     public boolean withinValidLoadingrange(ITransportable iTransportable){
         if(Math.abs(iTransportable.getPosition().getX() - getPosition().getX())<= loadingDistanceLimit &&
                 Math.abs(iTransportable.getPosition().getY() - getPosition().getY())<=loadingDistanceLimit){
@@ -136,15 +112,29 @@ public abstract class TransportationVehicle extends Vehicle implements ITranspor
     }
 
     public void lowerCargo(){
-        if(!managingCargoWhileMoving()){
+        if(tryingToManageCargoSafely()){
             cargo.lower();
+        }
+    }
+
+    public void raiseCargo(){
+        if(tryingToManageCargoSafely()){
+            cargo.raise();
         }
 
     }
 
-    public void raiseCargo(){
-        if(!managingCargoWhileMoving()){
-            cargo.raise();
+    /**
+     * Drives the Tramsporter and updates the position of the cargo to that of the truck
+     */
+    @Override
+    public void move() {
+        if(cargo.isDown()){
+            throw new IllegalStateException("You need to raise the cargo before driving");
+        }
+        else{
+            super.move();
+            transportationList.forEach(transported -> transported.setPosition(getPosition()));
         }
     }
 

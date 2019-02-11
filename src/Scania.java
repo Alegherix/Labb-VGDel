@@ -17,13 +17,17 @@ public class Scania extends Vehicle{
 
 
     public Scania(Color color){
+       this(color, 70);
+    }
+
+    public Scania(Color color, double angleCap){
         body = new Body(color, 2);
         engine = new Engine(250);
         type = Vehicle.Type.TRUCK;
         direction = Direction.SOUTH;
         modelname = "Scania";
-        position = ITransportable.position;
-        cargo = new Cargo();
+        position = new Position();
+        cargo = new Cargo(angleCap);
     }
 
 
