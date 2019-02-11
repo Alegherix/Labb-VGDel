@@ -17,6 +17,10 @@ public class Scania extends Vehicle{
         cargo = new Cargo(angleCap);
     }
 
+    /**
+     * Returns the maximum degree of which the cargo can be turned for this Object
+     * @return
+     */
     public double getMaximumAngleCap(){
         return cargo.getAngleCap();
     }
@@ -45,6 +49,9 @@ public class Scania extends Vehicle{
         }
     }
 
+    /**
+     * Moves the Scania if the cargo isn't down
+     */
     @Override
     public void move() {
         if(!cargo.getAngle().getState().equals(Angle.STATE.DOWN)){

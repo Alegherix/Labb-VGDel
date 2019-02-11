@@ -71,6 +71,10 @@ public abstract class TransportationVehicle extends Vehicle implements ITranspor
         }
     }
 
+    /**
+     * Checks that the vehicle isn't loaded over it's capacity
+     * @return boolean based on if the loading is ok
+     */
     private boolean withinLoadingCapacity(){
         if(transportationList.size() < cargoLimit){
             return true;
@@ -80,6 +84,10 @@ public abstract class TransportationVehicle extends Vehicle implements ITranspor
         }
     }
 
+    /**
+     * Check to ze if the cargo is lowered before trying to operate upon it.
+     * @return
+     */
     private boolean cargoIsLowered(){
         if(!cargo.isDown()){
             throw new IllegalStateException("You need to lower the cargo before trying to load");
@@ -94,7 +102,7 @@ public abstract class TransportationVehicle extends Vehicle implements ITranspor
             return true;
         }
         else{
-            throw new IllegalStateException("Plesae stop moving before attempting to manage the Cargo");
+            throw new IllegalStateException("Please stop moving before attempting to manage the Cargo");
         }
     }
 
@@ -118,6 +126,11 @@ public abstract class TransportationVehicle extends Vehicle implements ITranspor
         return transportationList;
     }
 
+    /**
+     *
+     * @param iTransportable
+     * @return
+     */
     @Override
     public boolean withinValidLoadingrange(ITransportable iTransportable){
         if(Math.abs(iTransportable.getPosition().getX() - getPosition().getX())<= loadingDistanceLimit &&
@@ -129,12 +142,18 @@ public abstract class TransportationVehicle extends Vehicle implements ITranspor
         }
     }
 
+    /**
+     * Lowers the cargo if it's safe to do
+     */
     public void lowerCargo(){
         if(tryingToManageCargoSafely()){
             cargo.lower();
         }
     }
 
+    /**
+     * Raises the cargo if it's safe to do
+     */
     public void raiseCargo(){
         if(tryingToManageCargoSafely()){
             cargo.raise();
@@ -143,7 +162,7 @@ public abstract class TransportationVehicle extends Vehicle implements ITranspor
     }
 
     /**
-     * Drives the Tramsporter and updates the position of the cargo to that of the truck
+     * Drives the Transporter and updates the position of the cargo to that of the truck
      */
     @Override
     public void move() {

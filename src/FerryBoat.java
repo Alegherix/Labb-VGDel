@@ -18,8 +18,8 @@ public class FerryBoat extends TransportationVehicle{
 
 
     /**
-     *
-     * @return
+     * Unloads the first vehicle at the front of the boat
+     * @return the transported Vehicle
      */
     public ITransportable unload() {
         return super.unload(getTransported().getFirst(), decideCargoPositionWhenUnloading());
