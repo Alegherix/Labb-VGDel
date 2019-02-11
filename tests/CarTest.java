@@ -1,5 +1,8 @@
 import org.junit.Test;
 
+import java.awt.*;
+import java.util.concurrent.ThreadLocalRandom;
+
 import static org.junit.Assert.*;
 
 public class CarTest {
@@ -116,21 +119,23 @@ public class CarTest {
         scania.lowerCargo(20);
     }
     */
-/*
+
     @Test
     public void maximumCargoAngle(){
         Scania scania = new Scania();
-        scania.raiseCargo(150);
-        assertEquals(RegularCargo.UPPER_LIMIT, scania.getCargo().getCurrentAngle(),0);
+        scania.manuallyRaise(150);
+        assertEquals(scania.getMaximumAngleCap(), scania.getCargoAngle(),0);
     }
 
     @Test
     public void minimumCargoAngle(){
         Scania scania = new Scania();
+        scania.lowerCargo(55);
+        assertEquals(70-55, scania.getCargoAngle(),0);
         scania.lowerCargo(50);
-        assertEquals(RegularCargo.LOWER_LIMIT, scania.getCargo().getCurrentAngle(),0);
+        assertEquals(0,scania.getCargoAngle(),0);
     }
-*/
+
     @Test
     public void engineTest(){
         Saab95 saab95 = new Saab95();
@@ -138,52 +143,12 @@ public class CarTest {
         System.out.println(saab95.getEngine().getCurrentSpeed());
     }
 
-
-/*
     @Test
-    public void drivingWithCargoDown(){
-        SemiTruck semiTruck = new SemiTruck();
-        semiTruck.lowerCargo();
-        semiTruck.getEngine().startEngine();
-        semiTruck.move();
+    public void bodyScania(){
+        Scania scania = new Scania(Color.CYAN);
+        System.out.println(scania.getBody().getColor());
     }
 
-    @Test
-    public void tryingToLowerCargoWhileDriving(){
-        SemiTruck semiTruck = new SemiTruck();
-        semiTruck.getEngine().startEngine();
-        semiTruck.gas(1);
-        semiTruck.lowerCargo();
-    }
-
-    @Test
-    public void tryingToLoadCarOutOfRange(){
-        Saab95 saab95 = new Saab95();
-        saab95.gas(1);
-        for (int i = 0; i < 5; i++) {
-            saab95.move();
-        }
-        System.out.println(saab95.getPosition());
-
-        SemiTruck semiTruck = new SemiTruck();
-        semiTruck.gas(1);
-        for (int i = 0; i < 2; i++) {
-            semiTruck.move();
-        }
-        System.out.println(semiTruck.getPosition());
-        semiTruck.getEngine().stopEngine();
-        semiTruck.lowerCargo();
-        semiTruck.loadCargo(saab95);
-    }
-    */
-
-    @Test
-    public void drivingWithCargoDown(){
-        Semitruck semiTruck = new Semitruck();
-        semiTruck.getEngine().startEngine();
-        semiTruck.move();
-        semiTruck.lowerCargo();
-    }
 
     @Test
     public void depositCarsToGeneralShop(){
@@ -221,7 +186,7 @@ public class CarTest {
     }
 
     @Test
-    public void RunningScania(){
+    public void RunningScaniaWithCargoDown(){
         Scania scania = new Scania();
 
         scania.manuallyRaise(110);
@@ -235,7 +200,7 @@ public class CarTest {
     }
 
     @Test
-    public void ferryTest(){
+    public void ferryLoadingProperly(){
         FerryBoat ferryBoat = new FerryBoat();
         ferryBoat.lowerCargo();
         ferryBoat.getEngine().stopEngine();

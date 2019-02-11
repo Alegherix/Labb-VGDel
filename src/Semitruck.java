@@ -1,15 +1,19 @@
+import java.awt.*;
+
 public class Semitruck extends TransportationVehicle {
+
 
     public Semitruck() {
         this(10);
     }
 
     public Semitruck(int cargoLimit) {
-        super(cargoLimit);
+        this(cargoLimit, 70);
     }
 
     public Semitruck(int cargoLimit, double angleLimitOfCargo) {
-        super(cargoLimit, angleLimitOfCargo);
+        super(cargoLimit, angleLimitOfCargo, new Body(Color.RED, 2), new Engine(400),
+                Direction.SOUTH, new Position(), "SemiTruck v2", Type.TRUCK);
     }
 
 

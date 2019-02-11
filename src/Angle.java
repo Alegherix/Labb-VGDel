@@ -20,6 +20,7 @@ public class Angle {
 
     public Angle() {
         this.state = STATE.UP;
+        amount = STATE.UP.getDegree();
     }
 
     public STATE getState() {

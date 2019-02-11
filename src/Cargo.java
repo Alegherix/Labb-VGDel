@@ -34,12 +34,13 @@ public class Cargo implements ICargo {
     }
 
     public void manuallyLower(double amount){
-        if(getAngle().getState().getDegree() - amount <= 0){
+        if(angle.getAmount() - amount <= 0){
             angle.setState(0);
         }
         else{
-            angle.setState(amount);
+            angle.setState(angle.getAmount() - amount);
         }
+
     }
 
     public boolean isDown(){

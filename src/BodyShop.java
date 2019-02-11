@@ -5,7 +5,7 @@ public class BodyShop <T extends Vehicle> {
 
     private T t;
     private int limit;
-    List<T> vehicles;
+    private List<T> vehicles;
 
     public BodyShop() {
         this(10);

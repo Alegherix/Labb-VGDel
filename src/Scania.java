@@ -1,35 +1,24 @@
 import java.awt.*;
 
 public class Scania extends Vehicle{
-    private Vehicle.Type type;
-    private Direction direction;
-    private Engine engine;
-    private Body body;
-    private String modelname;
-    private Position position;
+
     private Cargo cargo;
-
-
 
     public Scania() {
         this(Color.red);
     }
-
 
     public Scania(Color color){
        this(color, 70);
     }
 
     public Scania(Color color, double angleCap){
-        body = new Body(color, 2);
-        engine = new Engine(250);
-        type = Vehicle.Type.TRUCK;
-        direction = Direction.SOUTH;
-        modelname = "Scania";
-        position = new Position();
-        cargo = new Cargo(angleCap);
+        super(new Body(color, 2), new Engine(250), new Position(), Direction.SOUTH, "Scania", Type.TRUCK);
     }
 
+    public double getMaximumAngleCap(){
+        return cargo.getAngle().getAmount();
+    }
 
 
     public double getCargoAngle(){

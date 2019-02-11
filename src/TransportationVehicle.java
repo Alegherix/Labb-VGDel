@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.function.Predicate;
@@ -19,17 +20,34 @@ public abstract class TransportationVehicle extends Vehicle implements ITranspor
     }
 
     public TransportationVehicle(int cargoLimit, double angleLimitOfCargo) {
+        this(cargoLimit, angleLimitOfCargo,
+                new Body(Color.BLACK, 4), new Engine(400),
+                Direction.SOUTH, new Position(), "", Type.TRUCK);
+    }
+
+    public TransportationVehicle(int cargoLimit, double angleLimitOfCargo, Body body, Engine engine, Direction direction,
+        Position position, String modelName, Type type) {
+        super(body, engine, position, direction, modelName, type);
         loadingDistanceLimit = 2;
         this.cargoLimit = cargoLimit;
         transportationList = new LinkedList<>();
         cargo = new Cargo(angleLimitOfCargo);
-
     }
 
-  public boolean canUnloadCargo(){
+    /**
+     * Checks to make sure we can unload the cargo
+     * @return
+     */
+  private boolean canUnloadCargo(){
         return cargoIsLowered() && tryingToManageCargoSafely();
   }
 
+    /**
+     * Unloads the Carried Transportables
+     * @param iTransportable the object to be transported
+     * @param position to put the transported onto
+     * @return
+     */
     @Override
     public ITransportable unload(ITransportable iTransportable, Position position) {
         if(canUnloadCargo()){
@@ -42,7 +60,7 @@ public abstract class TransportationVehicle extends Vehicle implements ITranspor
     }
 
     /**
-     *
+     * Loads the Transportable onto the Cargo
      * @param iTransportable
      */
     @Override

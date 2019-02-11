@@ -1,4 +1,20 @@
+import java.awt.*;
+
 public class FerryBoat extends TransportationVehicle{
+
+
+    public FerryBoat() {
+    }
+
+    public FerryBoat(int cargoLimit) {
+        super(cargoLimit);
+    }
+
+    public FerryBoat(int cargoLimit, double angleLimitOfCargo) {
+        super(cargoLimit, angleLimitOfCargo,
+                new Body(Color.black, 2), new Engine(1000),
+                Direction.SOUTH, new Position(), "Ferry v2", Type.FERRY);
+    }
 
 
     public ITransportable unload() {
