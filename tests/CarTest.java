@@ -122,7 +122,7 @@ public class CarTest {
 
     @Test
     public void maximumCargoAngle(){
-        Scania scania = new Scania();
+        Scania scania = new Scania(Color.CYAN, 100);
         scania.manuallyRaise(150);
         assertEquals(scania.getMaximumAngleCap(), scania.getCargoAngle(),0);
     }
@@ -136,6 +136,7 @@ public class CarTest {
         assertEquals(0,scania.getCargoAngle(),0);
     }
 
+
     @Test
     public void engineTest(){
         Saab95 saab95 = new Saab95();
@@ -144,11 +145,15 @@ public class CarTest {
     }
 
     @Test
-    public void bodyScania(){
-        Scania scania = new Scania(Color.CYAN);
-        System.out.println(scania.getBody().getColor());
-    }
+    public void angleTest(){
+        Cargo cargo = new Cargo(100);
+        System.out.println(cargo.getAngle().getAmount());
 
+        Scania scania = new Scania();
+        scania.lowerCargo(120);
+        assertEquals(0, scania.getCargoAngle(),0);
+
+    }
 
     @Test
     public void depositCarsToGeneralShop(){

@@ -1,5 +1,8 @@
 public class Angle {
 
+    /**
+     * An enum for enabling reuse of the Cargo angle by using both state and value
+     */
     enum STATE{
 
         UP(70), DOWN(0);
@@ -12,15 +15,24 @@ public class Angle {
 
         STATE(double degree){
             this.degree = degree;
+
         }
     }
 
     private STATE state;
     private double amount;
 
+    /**
+     * A Class for
+     */
     public Angle() {
+        this(STATE.UP.getDegree());
+    }
+
+    public Angle(double amount){
         this.state = STATE.UP;
-        amount = STATE.UP.getDegree();
+        this.amount = amount;
+
     }
 
     public STATE getState() {

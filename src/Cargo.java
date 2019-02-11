@@ -9,7 +9,7 @@ public class Cargo implements ICargo {
 
     public Cargo(double angleCap){
         this.angleCap = angleCap;
-        angle = new Angle();
+        angle = new Angle(angleCap);
     }
 
 
@@ -49,5 +49,9 @@ public class Cargo implements ICargo {
 
     public Angle getAngle() {
         return angle;
+    }
+
+    public double getAngleCap() {
+        return angleCap;
     }
 }

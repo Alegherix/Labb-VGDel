@@ -14,10 +14,11 @@ public class Scania extends Vehicle{
 
     public Scania(Color color, double angleCap){
         super(new Body(color, 2), new Engine(250), new Position(), Direction.SOUTH, "Scania", Type.TRUCK);
+        cargo = new Cargo(angleCap);
     }
 
     public double getMaximumAngleCap(){
-        return cargo.getAngle().getAmount();
+        return cargo.getAngleCap();
     }
 
 

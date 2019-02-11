@@ -17,6 +17,10 @@ public class FerryBoat extends TransportationVehicle{
     }
 
 
+    /**
+     *
+     * @return
+     */
     public ITransportable unload() {
         return super.unload(getTransported().getFirst(), decideCargoPositionWhenUnloading());
     }

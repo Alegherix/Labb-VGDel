@@ -16,7 +16,6 @@ public class Semitruck extends TransportationVehicle {
                 Direction.SOUTH, new Position(), "SemiTruck v2", Type.TRUCK);
     }
 
-
     public ITransportable unload() {
         return super.unload(getTransported().getLast(), decideCargoPositionWhenUnloading());
     }
