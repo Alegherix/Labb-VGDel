@@ -170,4 +170,21 @@ public abstract class Vehicle implements Movable {
                 direction = Direction.EAST;
         }
     }
+
+
+    public void switchDirection() {
+        switch (direction){
+            case EAST:
+                direction = Direction.WEST;
+                break;
+            case SOUTH:
+                direction = Direction.NORTH;
+                break;
+            case WEST:
+                direction = Direction.EAST;
+                break;
+            case NORTH:
+                direction = Direction.SOUTH;
+        }
+    }
 }

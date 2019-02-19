@@ -4,6 +4,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.function.Consumer;
 
 /**
  * This class represents the full view of the MVC pattern of your car simulator.
@@ -38,6 +39,7 @@ public class CarView extends JFrame{
 
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
+    Consumer<Vehicle> brake = carc -> carC.engineHandling(car -> car.brake((double) gasAmount / 100));
 
     // Constructor
     public CarView(String framename, CarController cc){
@@ -101,12 +103,25 @@ public class CarView extends JFrame{
 
         // This actionListener is for the gas button only
         // TODO: Create more for each component as necessary
-        gasButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                carC.gas(gasAmount);
-            }
-        });
+
+        gasButton.addActionListener(e -> carC.gas(gasAmount));
+
+        //brakeButton.addActionListener(e -> carC.brake(gasAmount));
+
+        brakeButton.addActionListener(e -> carC.engineHandling(car -> car.brake((double) gasAmount / 100)));
+
+        brakeButton.addActionListener(e -> carC.engineHandling(brake));
+
+
+
+        Consumer<Vehicle> stopEngine = vehicle -> vehicle.getEngine().stopEngine();
+        // OK?
+        startButton.addActionListener(e -> carC.engineHandling(vehicle -> vehicle.getEngine().startEngine()));
+
+        stopButton.addActionListener(e -> carC.engineHandling(vehicle -> vehicle.getEngine().stopEngine()));
+
+
+
 
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();

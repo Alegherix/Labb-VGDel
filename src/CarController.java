@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /*
 * This class represents the Controller part in the MVC pattern.
@@ -36,6 +38,7 @@ public class CarController {
 
         // Start the timer
         cc.timer.start();
+
     }
 
     /* Each step the TimerListener moves all the cars in the list and tells the
@@ -56,10 +59,27 @@ public class CarController {
 
     // Calls the gas method for each car once
     void gas(int amount) {
-        double gas = ((double) amount) / 100;
-        for (Vehicle car : cars
-                ) {
-            car.gas(gas);
-        }
+        double gasAmount = accelerationAmount(amount);
+        cars.forEach(vehicle -> vehicle.gas(gasAmount));
     }
+
+    void brake(int amount){
+        double brakeAmount = accelerationAmount(amount);
+        cars.forEach(vehicle -> vehicle.brake(brakeAmount));
+    }
+
+    private double accelerationAmount(double amount) {
+        return amount / 100;
+    }
+
+    /**
+     * Used for managing the Engine of the vehicles via a Consumer Action
+     * @param action action for the cars to perform
+     */
+    void engineHandling(Consumer<Vehicle> action){
+        cars.forEach(action);
+    }
+
+
+
 }
