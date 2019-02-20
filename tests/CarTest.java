@@ -254,5 +254,30 @@ public class CarTest {
         semi.lowerCargo();
     }
 
+    @Test
+    public void pointTest(){
+        Point p = new Point(0,80);
+        System.out.println(p);
+    }
+
+    @Test
+    public void scaniaTest(){
+        Scania scania = new Scania();
+        System.out.println(scania.getMaximumAngleCap());
+        System.out.println(scania.getCargoAngle());
+        scania.move();
+    }
+
+    @Test
+    public void carPosition(){
+        Saab95 saab95 = new Saab95();
+        System.out.println(saab95.getPosition());
+        saab95.setPosition(0,50);
+        System.out.println(saab95.getPosition());
+        saab95.gas(1);
+        saab95.move();
+        System.out.println(saab95.getPosition());
+
+    }
 
 }

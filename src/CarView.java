@@ -4,6 +4,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -39,12 +40,13 @@ public class CarView extends JFrame{
 
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
-    Consumer<Vehicle> brake = carc -> carC.engineHandling(car -> car.brake((double) gasAmount / 100));
+
 
     // Constructor
     public CarView(String framename, CarController cc){
         this.carC = cc;
         initComponents(framename);
+        drawPanel.initializeVehicles(carC.getVehicles());
     }
 
     // Sets everything in place and fits everything
@@ -104,21 +106,12 @@ public class CarView extends JFrame{
         // This actionListener is for the gas button only
         // TODO: Create more for each component as necessary
 
-        gasButton.addActionListener(e -> carC.gas(gasAmount));
-
-        //brakeButton.addActionListener(e -> carC.brake(gasAmount));
-
-        brakeButton.addActionListener(e -> carC.engineHandling(car -> car.brake((double) gasAmount / 100)));
-
-        brakeButton.addActionListener(e -> carC.engineHandling(brake));
-
-
-
-        Consumer<Vehicle> stopEngine = vehicle -> vehicle.getEngine().stopEngine();
         // OK?
+        gasButton.addActionListener(e -> carC.engineHandling(car -> car.gas((double) gasAmount / 100)));
+        brakeButton.addActionListener(e -> carC.engineHandling(car -> car.brake((double) gasAmount / 100)));
         startButton.addActionListener(e -> carC.engineHandling(vehicle -> vehicle.getEngine().startEngine()));
-
         stopButton.addActionListener(e -> carC.engineHandling(vehicle -> vehicle.getEngine().stopEngine()));
+
 
 
 
@@ -135,4 +128,5 @@ public class CarView extends JFrame{
         // Make sure the frame exits when "x" is pressed
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+
 }

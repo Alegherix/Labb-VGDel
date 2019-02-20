@@ -30,6 +30,12 @@ public class Scania extends Vehicle{
         return cargo.getAngle().getAmount();
     }
 
+    public void raiseCargo(){
+        if(!isMoving()){
+            cargo.raise();
+        }
+    }
+
 
     public void lowerCargo(double amount){
         if(!isMoving()){
@@ -54,7 +60,7 @@ public class Scania extends Vehicle{
      */
     @Override
     public void move() {
-        if(!cargo.getAngle().getState().equals(Angle.STATE.DOWN)){
+        if(!cargo.getAngle().getState().equals(Angle.STATE.UP)){
             throw new IllegalStateException("You need to raise the cargo before trying to drive away");
         }
         super.move();

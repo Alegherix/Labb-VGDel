@@ -14,6 +14,11 @@ public abstract class Vehicle implements Movable {
     }
 
 
+    @Override
+    public String toString() {
+        return this.getClass().getName();
+    }
+
     public Vehicle(){
         this(new Body(Color.black,4), new Engine(100), new Position(), Direction.SOUTH, "", Type.CAR);
     }
@@ -54,6 +59,10 @@ public abstract class Vehicle implements Movable {
      */
     public Position getPosition() {
         return position;
+    }
+
+    public void setPosition(double x, double y) {
+        this.position = new Position(x, y);
     }
 
     public void setPosition(Position position) {
@@ -171,6 +180,11 @@ public abstract class Vehicle implements Movable {
         }
     }
 
+    public void switchDirectionIfNecessary(){
+        if(getPosition().getY()>=500 || getPosition().getY()<0){
+            switchDirection();
+        }
+    }
 
     public void switchDirection() {
         switch (direction){
