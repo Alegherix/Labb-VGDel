@@ -2,10 +2,6 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * This class represents the full view of the MVC pattern of your car simulator.
@@ -103,11 +99,11 @@ public class CarView extends JFrame{
         this.add(stopButton);
 
         // OK?
-        startButton.addActionListener(e -> carC.engineHandling(vehicle -> vehicle.getEngine().startEngine()));
-        stopButton.addActionListener(e -> carC.engineHandling(vehicle -> vehicle.getEngine().stopEngine()));
+        startButton.addActionListener(e -> carC.vehicleConsumer(vehicle -> vehicle.getEngine().startEngine()));
+        stopButton.addActionListener(e -> carC.vehicleConsumer(vehicle -> vehicle.getEngine().stopEngine()));
 
-        gasButton.addActionListener(e -> carC.engineHandling(vehicle -> vehicle.gas((double) gasAmount / 100)));
-        brakeButton.addActionListener(e -> carC.engineHandling(vehicle -> vehicle.brake((double) gasAmount / 100)));
+        gasButton.addActionListener(e -> carC.vehicleConsumer(vehicle -> vehicle.gas((double) gasAmount / 100)));
+        brakeButton.addActionListener(e -> carC.vehicleConsumer(vehicle -> vehicle.brake((double) gasAmount / 100)));
 
         turboOnButton.addActionListener(e -> carC.saabConsumer(Saab95::enableTurbo));
         turboOffButton.addActionListener(e -> carC.saabConsumer(Saab95::disableTurbo));

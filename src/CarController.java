@@ -60,35 +60,25 @@ public class CarController {
         vehicleMap.put(vehicle, vehicle.getImage());
     }
 
-    private List<Saab95> getSaabs(){
-       return vehicleMap.keySet()
-               .stream()
-               .filter(vehicle -> vehicle instanceof Saab95)
-               .map(vehicle -> (Saab95)vehicle)
-               .collect(Collectors.toList());
-    }
-
-    private List<Scania> getScanias(){
-        return vehicleMap.keySet()
-                .stream()
-                .filter(vehicle -> vehicle instanceof Scania)
-                .map(vehicle -> (Scania)vehicle)
-                .collect(Collectors.toList());
-    }
-
-
-    void engineHandling(Consumer<Vehicle> action){
-        vehicleMap.keySet().forEach(action);
-    }
-
     public void saabConsumer(Consumer<Saab95> action){
-        getSaabs().forEach(action);
+        vehicleMap.keySet()
+                .stream()
+                .filter(vehicle -> vehicle instanceof Saab95)
+                .map(vehicle -> (Saab95)vehicle)
+                .forEach(action);
     }
 
     public void scaniaConsumer(Consumer<Scania> action){
-        getScanias().forEach(action);
+         vehicleMap.keySet()
+                 .stream()
+                 .filter(vehicle -> vehicle instanceof Scania)
+                 .map(vehicle -> (Scania)vehicle)
+                 .forEach(action);
     }
 
+    void vehicleConsumer(Consumer<Vehicle> action){
+        vehicleMap.keySet().forEach(action);
+    }
 
     /* Each step the TimerListener moves all the cars in the list and tells the
     * view to update its images. Change this method to your needs.
