@@ -2,11 +2,13 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /*
 * This class represents the Controller part in the MVC pattern.
@@ -50,14 +52,6 @@ public class CarController {
         addCars(scania);
     }
 
-    /**
-     * Used for managing the Engine of the vehicles via a Consumer Action
-     * @param action action for the cars to perform
-     */
-    void engineHandling(Consumer<Vehicle> action){
-        vehicleMap.keySet().forEach(action);
-    }
-
     public void addCars(Vehicle vehicle){
         if(vehicleMap == null){
             vehicleMap = new HashMap<>();
@@ -82,6 +76,11 @@ public class CarController {
                 .collect(Collectors.toList());
     }
 
+
+    void engineHandling(Consumer<Vehicle> action){
+        vehicleMap.keySet().forEach(action);
+    }
+
     public void saabConsumer(Consumer<Saab95> action){
         getSaabs().forEach(action);
     }
@@ -103,7 +102,6 @@ public class CarController {
             }
         }
     }
-
 
     public static void main(String[] args) {
         // Instance of this class

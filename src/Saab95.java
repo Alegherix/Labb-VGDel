@@ -57,7 +57,7 @@ public class Saab95 extends Vehicle implements ITransportable{
         return getEngine().getEnginePower()* 0.01 * turbo;
     }
 
-    public boolean isTurboOn() {
+    public boolean turboOn() {
         return turboOn;
     }
 }

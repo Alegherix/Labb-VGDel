@@ -49,7 +49,6 @@ public class CarView extends JFrame{
     }
 
     // Sets everything in place and fits everything
-    // TODO: Take a good look and make sure you understand how these methods and components work
     private void initComponents(String title) {
 
         this.setTitle(title);
@@ -103,10 +102,6 @@ public class CarView extends JFrame{
         stopButton.setPreferredSize(new Dimension(X/5-15,200));
         this.add(stopButton);
 
-        // This actionListener is for the gas button only
-        // TODO: Create more for each component as necessary
-
-
         // OK?
         startButton.addActionListener(e -> carC.engineHandling(vehicle -> vehicle.getEngine().startEngine()));
         stopButton.addActionListener(e -> carC.engineHandling(vehicle -> vehicle.getEngine().stopEngine()));
@@ -119,7 +114,6 @@ public class CarView extends JFrame{
 
         lowerBedButton.addActionListener(e -> carC.scaniaConsumer(Scania::lowerCargo));
         liftBedButton.addActionListener(e -> carC.scaniaConsumer(Scania::raiseCargo));
-
 
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();

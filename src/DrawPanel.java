@@ -17,7 +17,6 @@ public class DrawPanel extends JPanel{
         this.setBackground(Color.green);
     }
 
-
     // This method is called each time the panel updates/refreshes/repaints itself
     @Override
     protected void paintComponent(Graphics g) {
