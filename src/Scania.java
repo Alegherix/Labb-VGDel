@@ -36,6 +36,12 @@ public class Scania extends Vehicle{
         }
     }
 
+    public void lowerCargo(){
+        if(!isMoving()){
+            cargo.lower();
+        }
+    }
+
 
     public void lowerCargo(double amount){
         if(!isMoving()){

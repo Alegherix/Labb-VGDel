@@ -22,7 +22,7 @@ public class CarView extends JFrame{
     // The controller member
     CarController carC;
 
-    DrawPanel drawPanel = new DrawPanel(X, Y-240);
+    DrawPanel drawPanel;
 
     JPanel controlPanel = new JPanel();
 
@@ -46,7 +46,6 @@ public class CarView extends JFrame{
     public CarView(String framename, CarController cc){
         this.carC = cc;
         initComponents(framename);
-        drawPanel.initializeVehicles(carC.getVehicles());
     }
 
     // Sets everything in place and fits everything
@@ -57,6 +56,7 @@ public class CarView extends JFrame{
         this.setPreferredSize(new Dimension(X,Y));
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
+        drawPanel = new DrawPanel(X, Y-240, carC.getVehicleMap());
         this.add(drawPanel);
 
 
@@ -106,14 +106,19 @@ public class CarView extends JFrame{
         // This actionListener is for the gas button only
         // TODO: Create more for each component as necessary
 
+
         // OK?
-        gasButton.addActionListener(e -> carC.engineHandling(car -> car.gas((double) gasAmount / 100)));
-        brakeButton.addActionListener(e -> carC.engineHandling(car -> car.brake((double) gasAmount / 100)));
         startButton.addActionListener(e -> carC.engineHandling(vehicle -> vehicle.getEngine().startEngine()));
         stopButton.addActionListener(e -> carC.engineHandling(vehicle -> vehicle.getEngine().stopEngine()));
 
+        gasButton.addActionListener(e -> carC.engineHandling(vehicle -> vehicle.gas((double) gasAmount / 100)));
+        brakeButton.addActionListener(e -> carC.engineHandling(vehicle -> vehicle.brake((double) gasAmount / 100)));
 
+        turboOnButton.addActionListener(e -> carC.saabConsumer(Saab95::enableTurbo));
+        turboOffButton.addActionListener(e -> carC.saabConsumer(Saab95::disableTurbo));
 
+        lowerBedButton.addActionListener(e -> carC.scaniaConsumer(Scania::lowerCargo));
+        liftBedButton.addActionListener(e -> carC.scaniaConsumer(Scania::raiseCargo));
 
 
         // Make the frame pack all it's components by respecting the sizes if possible.

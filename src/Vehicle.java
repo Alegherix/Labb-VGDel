@@ -1,6 +1,9 @@
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
-public abstract class Vehicle implements Movable {
+public abstract class Vehicle implements Movable{
 
     private Body body;
     private Engine engine;
@@ -200,5 +203,14 @@ public abstract class Vehicle implements Movable {
             case NORTH:
                 direction = Direction.SOUTH;
         }
+    }
+
+    public BufferedImage getImage() {
+        try {
+            return ImageIO.read(DrawPanel.class.getResourceAsStream("pics/" + getClass().getName() +".jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

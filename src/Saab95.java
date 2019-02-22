@@ -34,14 +34,14 @@ public class Saab95 extends Vehicle implements ITransportable{
     /**
      * Sets the turbo of the car to on
      */
-    public void setTurboOn(){
+    public void enableTurbo(){
 	    turboOn = true;
     }
 
     /**
      * Sets the turbo of the car off.
      */
-    public void setTurboOff(){
+    public void disableTurbo(){
 	    turboOn = false;
     }
 
@@ -55,5 +55,9 @@ public class Saab95 extends Vehicle implements ITransportable{
         if(turboOn) turbo = 1.3;
         //return saab95.getEngine().enginePower * 0.01 * turbo;
         return getEngine().getEnginePower()* 0.01 * turbo;
+    }
+
+    public boolean isTurboOn() {
+        return turboOn;
     }
 }

@@ -1,11 +1,12 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.image.BufferedImage;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /*
 * This class represents the Controller part in the MVC pattern.
@@ -26,37 +27,27 @@ public class CarController {
     CarView frame;
 
     // A list of cars, modify if needed
-    List<Vehicle> cars = new ArrayList<>();
+    Map<Vehicle, BufferedImage> vehicleMap;
 
-
-    public static void main(String[] args) {
-        // Instance of this class
-        CarController cc = new CarController();
-
-        Scania scania = new Scania();
-        scania.getPosition().setY(200);
-
-        Saab95 saab95 = new Saab95();
-        saab95.setPosition(0,100);
-
-
-        cc.cars.add(new Volvo240());
-        cc.cars.add(saab95);
-        cc.cars.add(scania);
-
-        // Start a new view and send a reference of self
-        cc.frame = new CarView("CarSim 1.0", cc);
-
-        for(Vehicle v : cc.cars){
-            System.out.println(v.getPosition());
-        }
-
-        // Start the timer
-        cc.timer.start();
+    public Map<Vehicle, BufferedImage> getVehicleMap() {
+        return vehicleMap;
     }
 
-    public List<Vehicle> getVehicles(){
-        return cars;
+    /**
+     * Used to test a round of 3 Vehicles Interacting.
+     */
+
+    public void enableTestRound(){
+        Saab95 saab95 = new Saab95();
+        Volvo240 volvo240 = new Volvo240();
+        Scania scania = new Scania();
+
+        volvo240.setPosition(0,100);
+        scania.setPosition(0,200);
+
+        addCars(saab95);
+        addCars(volvo240);
+        addCars(scania);
     }
 
     /**
@@ -64,7 +55,39 @@ public class CarController {
      * @param action action for the cars to perform
      */
     void engineHandling(Consumer<Vehicle> action){
-        cars.forEach(action);
+        vehicleMap.keySet().forEach(action);
+    }
+
+    public void addCars(Vehicle vehicle){
+        if(vehicleMap == null){
+            vehicleMap = new HashMap<>();
+
+        }
+        vehicleMap.put(vehicle, vehicle.getImage());
+    }
+
+    private List<Saab95> getSaabs(){
+       return vehicleMap.keySet()
+               .stream()
+               .filter(vehicle -> vehicle instanceof Saab95)
+               .map(vehicle -> (Saab95)vehicle)
+               .collect(Collectors.toList());
+    }
+
+    private List<Scania> getScanias(){
+        return vehicleMap.keySet()
+                .stream()
+                .filter(vehicle -> vehicle instanceof Scania)
+                .map(vehicle -> (Scania)vehicle)
+                .collect(Collectors.toList());
+    }
+
+    public void saabConsumer(Consumer<Saab95> action){
+        getSaabs().forEach(action);
+    }
+
+    public void scaniaConsumer(Consumer<Scania> action){
+        getScanias().forEach(action);
     }
 
 
@@ -73,22 +96,26 @@ public class CarController {
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            for (Vehicle vehicle : cars) {
-                vehicle.switchDirectionIfNecessary();
-                vehicle.move();
-
-                // Uppdaterar Positionen, viktigt att fixa behöver ej Point
-                int x = (int) Math.round(vehicle.getPosition().getX());
-                int y = (int) Math.round(vehicle.getPosition().getY());
-                frame.drawPanel.moveit(x, y);
-                // repaint() calls the paintComponent method of the panel
+            for(Vehicle v : vehicleMap.keySet()){
+                v.switchDirectionIfNecessary();
+                v.move();
                 frame.drawPanel.repaint();
-                System.out.println(vehicle + "And position is " + vehicle.getPosition());
             }
         }
     }
 
 
+    public static void main(String[] args) {
+        // Instance of this class
+        CarController cc = new CarController();
+
+        cc.enableTestRound();
+
+        cc.frame = new CarView("CarSim 1.0", cc);
+
+        // Start the timer
+        cc.timer.start();
+    }
 
 
 }
