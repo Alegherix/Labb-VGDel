@@ -1,5 +1,5 @@
 public interface IObservable {
-    void add(IObserver observer);
+    void addObserver(IObserver observer);
 
     void remove(IObserver observer);
 

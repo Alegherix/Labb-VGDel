@@ -9,16 +9,6 @@ public class Saab95 extends Vehicle implements ITransportable{
         this(Color.black);
     }
 
-    public Saab95(Position position){
-        super(new Body(Color.WHITE, 2),
-                new Engine(125),
-                position,
-                Direction.SOUTH,
-                "Saab95",
-                Type.CAR);
-        turboOn = false;
-        getEngine().stopEngine();
-    }
 
     public Saab95(Color color){
         super(new Body(color, 2),

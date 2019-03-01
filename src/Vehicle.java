@@ -204,13 +204,4 @@ public abstract class Vehicle implements Movable{
                 direction = Direction.SOUTH;
         }
     }
-
-    public BufferedImage getImage() {
-        try {
-            return ImageIO.read(DrawPanel.class.getResourceAsStream("pics/" + getClass().getName() +".jpg"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 }

@@ -1,8 +1,14 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Observer;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * This class represents the full view of the MVC pattern of your car simulator.
@@ -15,10 +21,9 @@ import java.util.Observer;
 public class CarView extends JFrame implements IObserver {
     private static final int X = 800;
     private static final int Y = 800;
+    private HashMap<Vehicle, BufferedImage> vehicleMap;
 
     // The controller member
-    CarController carC;
-
     DrawPanel drawPanel;
 
     JPanel controlPanel = new JPanel();
@@ -40,10 +45,17 @@ public class CarView extends JFrame implements IObserver {
 
 
     // Constructor
-    public CarView(String framename, CarController cc){
-        this.carC = cc;
+    public CarView(String framename){
+        vehicleMap = new HashMap<>();
         initComponents(framename);
     }
+
+    public void initializeMap(List<Vehicle> vehicles){
+        for(Vehicle v : vehicles){
+            vehicleMap.put(v, getImage(v));
+        }
+    }
+
 
     // Sets everything in place and fits everything
     private void initComponents(String title) {
@@ -52,7 +64,7 @@ public class CarView extends JFrame implements IObserver {
         this.setPreferredSize(new Dimension(X,Y));
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
-        drawPanel = new DrawPanel(X, Y-240, carC.getVehicleMap());
+        drawPanel = new DrawPanel(X, Y-240, vehicleMap);
         this.add(drawPanel);
 
 
@@ -100,6 +112,7 @@ public class CarView extends JFrame implements IObserver {
         this.add(stopButton);
 
         // OK?
+        /*
         startButton.addActionListener(e -> carC.vehicleConsumer(vehicle -> vehicle.getEngine().startEngine()));
         stopButton.addActionListener(e -> carC.vehicleConsumer(vehicle -> vehicle.getEngine().stopEngine()));
 
@@ -112,9 +125,7 @@ public class CarView extends JFrame implements IObserver {
         lowerBedButton.addActionListener(e -> carC.scaniaConsumer(Scania::lowerCargo));
         liftBedButton.addActionListener(e -> carC.scaniaConsumer(Scania::raiseCargo));
 
-
-        
-
+        */
 
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();
@@ -127,6 +138,15 @@ public class CarView extends JFrame implements IObserver {
         this.setVisible(true);
         // Make sure the frame exits when "x" is pressed
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public BufferedImage getImage(Vehicle vehicle) {
+        try {
+            return ImageIO.read(DrawPanel.class.getResourceAsStream("pics/" + vehicle.getClass().getName() +".jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override

@@ -27,7 +27,7 @@ public class BodyShop <T extends Vehicle> {
         }
         else if(vehicles.size() == limit){
             System.out.println("The Bodyshop is already full, please withdraw a "
-                    + t.getClass().getName() + " before trying to add more");
+                    + t.getClass().getName() + " before trying to addObserver more");
         }
         else{
             vehicles.add(t);
