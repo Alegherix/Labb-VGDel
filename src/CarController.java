@@ -1,4 +1,5 @@
 import java.awt.image.BufferedImage;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -13,38 +14,25 @@ public class CarController {
     CarView frame;
     VehicleModel model;
 
-    // A list of cars, modify if needed
-    Map<Vehicle, BufferedImage> vehicleMap;
 
-    public VehicleModel getModel() {
-        return model;
+    public CarController(CarView frame, VehicleModel model) {
+        this.frame = frame;
+        this.model = model;
+    }
+
+    public List<Vehicle> getWorkingVehicles(){
+        return model.getVehicleList();
     }
 
     public void saabConsumer2(Consumer<Saab95> saab95Consumer){
         model.getSaab95s().forEach(saab95Consumer);
     }
 
-
-    /*
-    public void saabConsumer(Consumer<Saab95> action){
-        vehicleMap.keySet()
-                .stream()
-                .filter(vehicle -> vehicle instanceof Saab95)
-                .map(vehicle -> (Saab95)vehicle)
-                .forEach(action);
-    }
-
-
-    public void scaniaConsumer(Consumer<Scania> action){
-         vehicleMap.keySet()
-                 .stream()
-                 .filter(vehicle -> vehicle instanceof Scania)
-                 .map(vehicle -> (Scania)vehicle)
-                 .forEach(action);
+    public void scaniaConsumer(Consumer<Scania> scaniaConsumer){
+        model.getScanias().forEach(scaniaConsumer);
     }
 
     void vehicleConsumer(Consumer<Vehicle> action){
-        vehicleMap.keySet().forEach(action);
+        model.getVehicleList().forEach(action);
     }
-    */
 }

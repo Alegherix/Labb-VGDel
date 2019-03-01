@@ -2,7 +2,8 @@ public class Simulator {
     public static void main(String[] args) {
         // Create the required components to run
         VehicleModel vehicleModel = new VehicleModel();
-        CarView carView = new CarView("Carsim 2.0");
+        CarView carView = new CarView("Carsim 2.0", vehicleModel.getVehicleList());
+        CarController carController = new CarController(carView, vehicleModel);
 
         //Creates test Vehicles
         Saab95 saab95 = new Saab95();
@@ -16,7 +17,7 @@ public class Simulator {
         //Adds the View as an Observer of the modell
         vehicleModel.addObserver(carView);
 
-        carView.initializeMap(vehicleModel.getVehicleList());
+        carView.initializeMap(carController.getWorkingVehicles());
 
         vehicleModel.getTimer().start();
     }

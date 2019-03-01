@@ -45,12 +45,13 @@ public class CarView extends JFrame implements IObserver {
 
 
     // Constructor
-    public CarView(String framename){
-        vehicleMap = new HashMap<>();
+    public CarView(String framename, List<Vehicle> vehicles){
+        initializeMap(vehicles);
         initComponents(framename);
     }
 
     public void initializeMap(List<Vehicle> vehicles){
+        vehicleMap = new HashMap<>();
         for(Vehicle v : vehicles){
             vehicleMap.put(v, getImage(v));
         }
