@@ -15,7 +15,7 @@ public class VehicleModel implements IObservable{
     List<Volvo240> volvo240s;
     List<Scania> scanias;
     Map<Vehicle, BufferedImage> vehicleMap;
-    private Timer timer = new Timer(delay, new TimerListener());
+    Timer timer = new Timer(delay, new TimerListener());
 
     public VehicleModel() {
         observers = new ArrayList<>();
