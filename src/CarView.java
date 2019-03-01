@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.util.Observer;
 
 /**
  * This class represents the full view of the MVC pattern of your car simulator.
@@ -11,7 +12,7 @@ import java.awt.*;
  * TODO: Write more actionListeners and wire the rest of the buttons
  **/
 
-public class CarView extends JFrame{
+public class CarView extends JFrame implements IObserver {
     private static final int X = 800;
     private static final int Y = 800;
 
@@ -111,6 +112,10 @@ public class CarView extends JFrame{
         lowerBedButton.addActionListener(e -> carC.scaniaConsumer(Scania::lowerCargo));
         liftBedButton.addActionListener(e -> carC.scaniaConsumer(Scania::raiseCargo));
 
+
+        
+
+
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();
 
@@ -124,4 +129,8 @@ public class CarView extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    @Override
+    public void update() {
+        drawPanel.repaint();
+    }
 }

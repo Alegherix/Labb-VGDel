@@ -2,13 +2,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /*
 * This class represents the Controller part in the MVC pattern.
@@ -44,8 +40,8 @@ public class CarController {
         Volvo240 volvo240 = new Volvo240();
         Scania scania = new Scania();
 
-        volvo240.setPosition(0,100);
-        scania.setPosition(0,200);
+        volvo240.setPosition(100,0);
+        scania.setPosition(200,0);
 
         addCars(saab95);
         addCars(volvo240);
@@ -68,6 +64,7 @@ public class CarController {
                 .forEach(action);
     }
 
+
     public void scaniaConsumer(Consumer<Scania> action){
          vehicleMap.keySet()
                  .stream()
@@ -80,8 +77,9 @@ public class CarController {
         vehicleMap.keySet().forEach(action);
     }
 
+
     /* Each step the TimerListener moves all the cars in the list and tells the
-    * view to update its images. Change this method to your needs.
+    * view to update its images. Change this method to your needs.§
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -104,6 +102,4 @@ public class CarController {
         // Start the timer
         cc.timer.start();
     }
-
-
 }
