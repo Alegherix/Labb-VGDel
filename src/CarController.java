@@ -1,6 +1,5 @@
-import java.awt.image.BufferedImage;
+import javax.swing.*;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 
 /*
@@ -10,29 +9,58 @@ import java.util.function.Consumer;
  */
 
 public class CarController {
-    // The frame that represents this instance View of the MVC pattern
-    CarView frame;
+    // The view that represents this instance View of the MVC pattern
+    CarView view;
     VehicleModel model;
 
 
-    public CarController(CarView frame, VehicleModel model) {
-        this.frame = frame;
-        this.model = model;
-    }
 
     public List<Vehicle> getWorkingVehicles(){
         return model.getVehicleList();
     }
 
-    public void saabConsumer2(Consumer<Saab95> saab95Consumer){
-        model.getSaab95s().forEach(saab95Consumer);
+    public void setView(CarView view) {
+        this.view = view;
+        enableAllButtons();
     }
 
-    public void scaniaConsumer(Consumer<Scania> scaniaConsumer){
-        model.getScanias().forEach(scaniaConsumer);
+    public void setModel(VehicleModel model) {
+        this.model = model;
     }
 
-    void vehicleConsumer(Consumer<Vehicle> action){
-        model.getVehicleList().forEach(action);
+    private void bindFunctionalityToVehicle(JButton button, Consumer<Vehicle> vehicleConsumer){
+        button.addActionListener(e -> model.getVehicleList().forEach(vehicleConsumer));
     }
+
+    private void bindFunctionalityToSaab(JButton button, Consumer<Saab95> saab95Consumer){
+        button.addActionListener(e -> model.getSaab95s().forEach(saab95Consumer));
+    }
+
+    private void bindFuncionalityToScania(JButton button, Consumer<Scania> scaniaConsumer){
+        button.addActionListener(e -> model.getScanias().forEach(scaniaConsumer));
+    }
+
+    private void enableVehicleButtons(){
+        bindFunctionalityToVehicle(view.getStartButton(), vehicle -> vehicle.getEngine().startEngine());
+        bindFunctionalityToVehicle(view.getStopButton(), vehicle -> vehicle.getEngine().stopEngine());
+        bindFunctionalityToVehicle(view.getBrakeButton(), vehicle -> vehicle.brake(view.getGasAmount()));
+        bindFunctionalityToVehicle(view.getGasButton(), vehicle -> vehicle.gas(view.getGasAmount()));
+    }
+
+    private void enableScaniaButtons(){
+        bindFuncionalityToScania(view.getLiftBedButton(), Scania::raiseCargo);
+        bindFuncionalityToScania(view.getLowerBedButton(), Scania::lowerCargo);
+    }
+
+    private void enableSaabButtons(){
+        bindFunctionalityToSaab(view.getTurboOnButton(), Saab95::enableTurbo);
+        bindFunctionalityToSaab(view.getTurboOffButton(), Saab95::disableTurbo);
+    }
+
+    private void enableAllButtons(){
+        enableVehicleButtons();
+        enableScaniaButtons();
+        enableSaabButtons();
+    }
+
 }

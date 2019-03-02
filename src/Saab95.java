@@ -26,6 +26,7 @@ public class Saab95 extends Vehicle implements ITransportable{
      */
     public void enableTurbo(){
 	    turboOn = true;
+        System.out.println("Turbo Enabled");
     }
 
     /**
@@ -33,6 +34,7 @@ public class Saab95 extends Vehicle implements ITransportable{
      */
     public void disableTurbo(){
 	    turboOn = false;
+        System.out.println("Turbo Disabled");
     }
 
 

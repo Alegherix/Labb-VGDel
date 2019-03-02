@@ -23,35 +23,32 @@ public class CarView extends JFrame implements IObserver {
     private static final int Y = 800;
     private HashMap<Vehicle, BufferedImage> vehicleMap;
 
-    // The controller member
-    DrawPanel drawPanel;
+    private DrawPanel drawPanel;
 
-    JPanel controlPanel = new JPanel();
+    private final JPanel controlPanel = new JPanel();
 
-    JPanel gasPanel = new JPanel();
-    JSpinner gasSpinner = new JSpinner();
-    int gasAmount = 0;
-    JLabel gasLabel = new JLabel("Amount of gas");
+    private final JPanel gasPanel = new JPanel();
+    private JSpinner gasSpinner = new JSpinner();
+    private int gasAmount = 0;
+    private final JLabel gasLabel = new JLabel("Amount of gas");
 
-    JButton gasButton = new JButton("Gas");
-    JButton brakeButton = new JButton("Brake");
-    JButton turboOnButton = new JButton("Saab Turbo on");
-    JButton turboOffButton = new JButton("Saab Turbo off");
-    JButton liftBedButton = new JButton("Scania Lift Bed");
-    JButton lowerBedButton = new JButton("Lower Lift Bed");
-
-    JButton startButton = new JButton("Start all cars");
-    JButton stopButton = new JButton("Stop all cars");
+    private final JButton gasButton = new JButton("Gas");
+    private final JButton brakeButton = new JButton("Brake");
+    private final JButton turboOnButton = new JButton("Saab Turbo on");
+    private final JButton turboOffButton = new JButton("Saab Turbo off");
+    private final JButton liftBedButton = new JButton("Scania Lift Bed");
+    private final JButton lowerBedButton = new JButton("Lower Lift Bed");
+    private final JButton startButton = new JButton("Start all cars");
+    private final JButton stopButton = new JButton("Stop all cars");
 
 
     // Constructor
-    public CarView(String framename, List<Vehicle> vehicles){
-        initializeMap(vehicles);
+    public CarView(String framename){
+        vehicleMap = new HashMap<>();
         initComponents(framename);
     }
 
     public void initializeMap(List<Vehicle> vehicles){
-        vehicleMap = new HashMap<>();
         for(Vehicle v : vehicles){
             vehicleMap.put(v, getImage(v));
         }
@@ -76,11 +73,7 @@ public class CarView extends JFrame implements IObserver {
                         100, //max
                         1);//step
         gasSpinner = new JSpinner(spinnerModel);
-        gasSpinner.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                gasAmount = (int) ((JSpinner)e.getSource()).getValue();
-            }
-        });
+        gasSpinner.addChangeListener(e -> gasAmount = (int)((JSpinner)e.getSource()).getValue());
 
         gasPanel.setLayout(new BorderLayout());
         gasPanel.add(gasLabel, BorderLayout.PAGE_START);
@@ -112,32 +105,17 @@ public class CarView extends JFrame implements IObserver {
         stopButton.setPreferredSize(new Dimension(X/5-15,200));
         this.add(stopButton);
 
-        // OK?
-        /*
-        startButton.addActionListener(e -> carC.vehicleConsumer(vehicle -> vehicle.getEngine().startEngine()));
-        stopButton.addActionListener(e -> carC.vehicleConsumer(vehicle -> vehicle.getEngine().stopEngine()));
 
-        gasButton.addActionListener(e -> carC.vehicleConsumer(vehicle -> vehicle.gas((double) gasAmount / 100)));
-        brakeButton.addActionListener(e -> carC.vehicleConsumer(vehicle -> vehicle.brake((double) gasAmount / 100)));
-
-        turboOnButton.addActionListener(e -> carC.saabConsumer(Saab95::enableTurbo));
-        turboOffButton.addActionListener(e -> carC.saabConsumer(Saab95::disableTurbo));
-
-        lowerBedButton.addActionListener(e -> carC.scaniaConsumer(Scania::lowerCargo));
-        liftBedButton.addActionListener(e -> carC.scaniaConsumer(Scania::raiseCargo));
-
-        */
-
-        // Make the frame pack all it's components by respecting the sizes if possible.
+        // Make the view pack all it's components by respecting the sizes if possible.
         this.pack();
 
         // Get the computer screen resolution
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        // Center the frame
+        // Center the view
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-        // Make the frame visible
+        // Make the view visible
         this.setVisible(true);
-        // Make sure the frame exits when "x" is pressed
+        // Make sure the view exits when "x" is pressed
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
@@ -148,6 +126,42 @@ public class CarView extends JFrame implements IObserver {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public JButton getStartButton() {
+        return startButton;
+    }
+
+    public JButton getGasButton() {
+        return gasButton;
+    }
+
+    public JButton getBrakeButton() {
+        return brakeButton;
+    }
+
+    public JButton getTurboOnButton() {
+        return turboOnButton;
+    }
+
+    public JButton getTurboOffButton() {
+        return turboOffButton;
+    }
+
+    public JButton getLiftBedButton() {
+        return liftBedButton;
+    }
+
+    public JButton getLowerBedButton() {
+        return lowerBedButton;
+    }
+
+    public JButton getStopButton() {
+        return stopButton;
+    }
+
+    public double getGasAmount() {
+        return (double)gasAmount / 100;
     }
 
     @Override
