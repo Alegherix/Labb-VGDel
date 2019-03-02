@@ -41,6 +41,17 @@ public class CarView extends JFrame implements IObserver {
     private final JButton startButton = new JButton("Start all cars");
     private final JButton stopButton = new JButton("Stop all cars");
 
+    private JLabel textLabel = new JLabel("Testar");
+
+
+    public void updateLabel(){
+        StringBuilder sb = new StringBuilder();
+        for(Vehicle v : vehicleMap.keySet()){
+            sb.append(v).append(" : ").append(v.getEngine().getCurrentSpeed()).append("\n");
+        }
+        textLabel.setText(sb.toString());
+
+    }
 
     // Constructor
     public CarView(String framename){
@@ -106,6 +117,9 @@ public class CarView extends JFrame implements IObserver {
         this.add(stopButton);
 
 
+        //För att lägga till Label
+        this.add(textLabel);
+
         // Make the view pack all it's components by respecting the sizes if possible.
         this.pack();
 
@@ -167,5 +181,6 @@ public class CarView extends JFrame implements IObserver {
     @Override
     public void update() {
         drawPanel.repaint();
+        updateLabel();
     }
 }
