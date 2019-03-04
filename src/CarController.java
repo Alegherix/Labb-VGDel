@@ -13,10 +13,10 @@ public class CarController {
     CarView view;
     VehicleModel model;
 
-
-
-    public List<Vehicle> getWorkingVehicles(){
-        return model.getVehicleList();
+    public CarController(CarView view, VehicleModel model) {
+        this.view = view;
+        this.model = model;
+        enableAllButtons();
     }
 
     public void setView(CarView view) {
@@ -57,10 +57,16 @@ public class CarController {
         bindFunctionalityToSaab(view.getTurboOffButton(), Saab95::disableTurbo);
     }
 
+    private void enableGenerationButtons(){
+        view.getAddCarButton().addActionListener(e -> model.generateVehicle());
+        view.getRemoveCarButton().addActionListener(e -> model.removeRandomVehicle());
+    }
+
     private void enableAllButtons(){
         enableVehicleButtons();
         enableScaniaButtons();
         enableSaabButtons();
+        enableGenerationButtons();
     }
 
 }

@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
 
 public class VehicleModel implements IObservable{
@@ -68,16 +69,47 @@ public class VehicleModel implements IObservable{
         }
     }
 
+    public void generateVehicle(){
+        //TODO - Need position buggfixing
+        if(vehicleList.size()<8){
+            int randomVal = ThreadLocalRandom.current().nextInt(3);
+            Position nextPosition = new Position(vehicleList.size() * 100 , 0);
 
+            if(randomVal == 0){
+                addVehicle(VehicleFactory.createSaab(nextPosition));
+            }
+            else if(randomVal == 1){
+                addVehicle(VehicleFactory.createVolvo(nextPosition));
+            }
+            else if(randomVal == 2){
+                addVehicle(VehicleFactory.createScania(nextPosition));
+            }
+            pushListUpdate();
+        }
+    }
+
+    public void removeRandomVehicle(){
+        if(vehicleList.size()>0){
+            Vehicle toRemove = vehicleList.get(ThreadLocalRandom.current().nextInt(0, vehicleList.size()));
+            pushListUpdate();
+            removeVehicle(toRemove);
+        }
+    }
 
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            pushListUpdate();
             for(Vehicle v : vehicleList){
                 v.switchDirectionIfNecessary();
                 v.move();
                 notifyUpdate();
             }
         }
+    }
+
+
+    public void pushListUpdate(){
+        observers.forEach(obs -> obs.updateList(vehicleList));
     }
 
     @Override

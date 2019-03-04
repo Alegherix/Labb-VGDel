@@ -5,13 +5,17 @@ public class Volvo240 extends Vehicle implements ITransportable{
     public static final double trimFactor = 1.25;
 
     public Volvo240(){
-        this(Color.black);
+        this(Color.black, new Position());
     }
 
-    public Volvo240(Color color){
+    public Volvo240(Position position){
+        this(Color.black, position);
+    }
+
+    public Volvo240(Color color, Position position){
         super(new Body(color, 4),
                 new Engine(100),
-                new Position(),
+                position,
                 Direction.SOUTH,
                 "Volvo240",
                 Type.CAR);

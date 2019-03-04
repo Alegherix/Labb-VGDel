@@ -120,12 +120,7 @@ public class CarTest {
     }
     */
 
-    @Test
-    public void maximumCargoAngle(){
-        Scania scania = new Scania(Color.CYAN, 100);
-        scania.manuallyRaise(150);
-        assertEquals(scania.getMaximumAngleCap(), scania.getCargoAngle(),0);
-    }
+
 
     @Test
     public void minimumCargoAngle(){

@@ -8,12 +8,16 @@ public class Scania extends Vehicle{
         this(Color.red);
     }
 
-    public Scania(Color color){
-       this(color, 70);
+    public Scania(Position position){
+        this(Color.black, 70, position);
     }
 
-    public Scania(Color color, double angleCap){
-        super(new Body(color, 2), new Engine(250), new Position(), Direction.SOUTH, "Scania", Type.TRUCK);
+    public Scania(Color color){
+       this(color, 70, new Position(0,0));
+    }
+
+    public Scania(Color color, double angleCap, Position position){
+        super(new Body(color, 2), new Engine(250), position, Direction.SOUTH, "Scania", Type.TRUCK);
         cargo = new Cargo(angleCap);
     }
 

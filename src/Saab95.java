@@ -6,14 +6,14 @@ public class Saab95 extends Vehicle implements ITransportable{
     //private final Vehicle saab95;
 
     public Saab95(){
-        this(Color.black);
+        this(new Position(0,0));
     }
 
 
-    public Saab95(Color color){
-        super(new Body(color, 2),
+    public Saab95(Position position){
+        super(new Body(Color.black, 2),
                 new Engine(125),
-                new Position(),
+                position,
                 Direction.SOUTH,
                 "Saab95",
                 Type.CAR);
