@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import java.util.Observer;
 
 public class SpeedView extends JLabel{
 

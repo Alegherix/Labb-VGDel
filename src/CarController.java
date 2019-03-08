@@ -45,6 +45,7 @@ public class CarController {
         bindFunctionalityToVehicle(view.getStopButton(), vehicle -> vehicle.getEngine().stopEngine());
         bindFunctionalityToVehicle(view.getBrakeButton(), vehicle -> vehicle.brake(view.getGasAmount()));
         bindFunctionalityToVehicle(view.getGasButton(), vehicle -> vehicle.gas(view.getGasAmount()));
+
     }
 
     private void enableScaniaButtons(){

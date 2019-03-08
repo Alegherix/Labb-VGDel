@@ -8,6 +8,7 @@ public class Simulator {
         //Adds testVehicles to model
         vehicleModel.addVehicle(VehicleFactory.createVolvo(new Position(0,0)));
         vehicleModel.addVehicle(VehicleFactory.createSaab(new Position(100,0)));
+        vehicleModel.addVehicle(VehicleFactory.createScania(new Position(200,0)));
 
         //Adds the View as an Observer of the modell
         vehicleModel.addObserver(carView);

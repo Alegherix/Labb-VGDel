@@ -99,6 +99,7 @@ public class VehicleModel implements IObservable{
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             pushListUpdate();
+
             for(Vehicle v : vehicleList){
                 v.switchDirectionIfNecessary();
                 v.move();

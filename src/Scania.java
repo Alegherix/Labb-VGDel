@@ -70,9 +70,11 @@ public class Scania extends Vehicle{
      */
     @Override
     public void move() {
-        if(!cargo.getAngle().getState().equals(Angle.STATE.UP)){
-            throw new IllegalStateException("You need to raise the cargo before trying to drive away");
+        if(cargo.getAngle().getState().equals(Angle.STATE.UP)){
+            super.move();
         }
-        super.move();
+        else if(cargo.getAngle().getState().equals(Angle.STATE.DOWN)){
+            // Do Nothing
+        }
     }
 }

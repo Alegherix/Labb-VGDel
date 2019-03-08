@@ -32,6 +32,10 @@ public class DrawPanel extends JPanel{
         }
     }
 
+    public void updateMap(Map<Vehicle, BufferedImage> map){
+        vehicleMap = map;
+    }
+
     // This method is called each time the panel updates/refreshes/repaints itself
     @Override
     protected void paintComponent(Graphics g) {
